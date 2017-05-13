@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<students>
+
+    <student id="001">
+        <first_name>Noureddine</first_name>
+        <last_name>Ait Said</last_name>
+        <branch>CSEE - T1</branch>
+        <level>INE2</level>
+        <email>noureddine.asni@gmail.com</email>
+    </student>
+
+    <student id="002">
+        <first_name>Mohamed Amine</first_name>
+        <last_name>Ennouali</last_name>
+        <branch>CSEE - T2</branch>
+        <level>INE2</level>
+        <email>medaminennouali@ŋmail.com</email>
+    </student>
+
+</students>

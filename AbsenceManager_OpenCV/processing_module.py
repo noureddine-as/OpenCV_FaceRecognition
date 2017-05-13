@@ -1,0 +1,116 @@
+import cv2, os
+import numpy as np
+from PIL import Image
+from xml_parser import *
+import collections
+
+
+cascadePath = "haarcascade_frontalface_default.xml"
+faceCascade, recognizer = None, None
+last_names = None
+
+CROPPING_ENABLED = True
+NB_TRAINING_IMGS = 10
+images_path = './images'
+
+
+def get_test_img_paths(path):
+    test_img_paths = []
+    for f in os.listdir(path):
+        if int(f.split("_")[1].split(".")[0]) >= NB_TRAINING_IMGS:
+            test_img_paths.append(f)
+    return test_img_paths
+
+
+def get_images_and_labels(path):
+    training_imgs_paths = []
+    for f in os.listdir(path):
+        if int(f.split("_")[1].split(".")[0]) < NB_TRAINING_IMGS:
+            training_imgs_paths.append(os.path.join(path, f))
+
+    training_images = []
+    labels = []
+
+    if not CROPPING_ENABLED:
+        for image_path in training_imgs_paths:
+            image_pil = Image.open(image_path).convert('L')
+            image = np.array(image_pil, 'uint8')
+            training_images.append(image)  # [y: y + h, x: x + w])
+            subject_id = int(os.path.split(image_path)[1].split("_")[0])
+            labels.append(subject_id)
+            cv2.imshow("TRAINING - %s" % image_path, image)   #subject_id, image)
+            cv2.waitKey(10)
+    else:
+        for image_path in training_imgs_paths:
+            image_pil = Image.open(image_path).convert('L')
+            image = np.array(image_pil, 'uint8')
+            faces = faceCascade.detectMultiScale(image)
+            # If face is detected, append the face to images and the label to labels
+            for (x, y, w, h) in faces:
+                training_images.append(image[y: y + h, x: x + w])
+                subject_id = int(os.path.split(image_path)[1].split("_")[0])
+                labels.append(subject_id)
+                cv2.imshow("TRAINING - %s" % image_path, image[y: y + h, x: x + w])
+               # cv2.imshow("TRAINING - %d" % subject_id, image[y: y + h, x: x + w])
+                cv2.waitKey(10)
+
+    return training_images, labels
+
+
+def train_recognizer():
+    global cascadePath, faceCascade, recognizer
+    faceCascade = cv2.CascadeClassifier(cascadePath)
+
+    # For face recognition we will the the LBPH Face Recognizer
+    recognizer = cv2.createLBPHFaceRecognizer()
+
+    # recognizer = cv2.createEigenFaceRecognizer()    #EigenFace needs images of same size
+    images, labels = get_images_and_labels(images_path)
+    cv2.destroyAllWindows()
+
+    # Perform the tranining
+    recognizer.train(images, np.array(labels))
+
+
+def run_recognizer():
+    global recognizer, last_names
+
+    last_names = get_LastNames()
+    cap = cv2.VideoCapture(0)
+
+    count = 0
+    results = {}
+    while 1:
+        _, predict_image = cap.read()
+
+        # Our operations on the frame come here
+        predict_image = cv2.cvtColor(predict_image, cv2.COLOR_BGR2GRAY)
+        faces = faceCascade.detectMultiScale(predict_image)
+
+        if len(faces) > 0:
+            max_area = 0
+            x = y = w = h = 0
+            for (_x, _y, _w, _h) in faces:
+                a = _w * _h
+                if a > max_area:
+                    max_area = a
+                    x, y, w, h = _x, _y, _w, _h
+            cv2.rectangle(img=predict_image, pt1=(x, y), pt2=(x + w, y + h), color=(255, 0, 0), thickness=2)
+            nbr_predicted, conf = recognizer.predict(predict_image[y: y + h, x: x + w])
+
+            results[nbr_predicted] = results.get(nbr_predicted, 0) + 1
+            count += 1
+            print "{} is Recognized with confidence {}".format(last_names[nbr_predicted], conf)
+            if count == 11 :
+                c = collections.Counter(results)
+                res = c.most_common(1)[0][0]
+                print "---------------->>>>>   {}   <<<<<<<----------------".format(last_names[res])   #, conf)
+                count = 0
+                results = {}
+
+            cv2.imshow("Recognizing Face", predict_image)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cv2.destroyAllWindows()

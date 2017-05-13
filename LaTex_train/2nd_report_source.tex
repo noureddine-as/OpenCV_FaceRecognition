@@ -43,7 +43,7 @@
     Object detection algorithms are used in face detection and face recognition. It is also used in tracking objects, for example tracking a ball during a football match, tracking movement of a cricket bat, tracking a person in a video.\par
     The concept is that every object class has its own special features that helps in classifying the class – for example all circles are round. Object class detection uses these special features. For example, when looking for circles, objects that are at a particular distance from a point (i.e. the center) are sought. Similarly, when looking for squares, objects that are perpendicular at corners and have equal side lengths are needed. A similar approach is used for face identification where eyes, nose, and lips can be found and features like skin color and distance between eyes can be found\cite{wiki_link}.\par
 
-\section{Face detection algorithms}
+\section{Face detection and tracking algorithms}
     Cascading is an ensemble learning based on the concatenation of several Classifiers, using all information collected from the output from a given classifier as additional information for the next classifier in the cascade. Cascading is a multistage system.\par
     Cascading classifiers are trained with several hundred ``\emph{positive}'' sample views of a particular object and arbitrary ``\emph{negative}'' images of the same size. \par
     After the classifier is trained it can be applied to a region of an image and detect the object in question. To search for the object in the entire frame, the search window can be moved across the image and check every location for the classifier. This process is most commonly used in image processing for object detection and tracking, primarily facial detection and recognition.\par
@@ -192,6 +192,10 @@ We calculate the weight of each color in the whole picture using histogram, and 
     \subsubsection{Track}
 
     The last step is tracking, if we have a video, or frames captured by our web camera, what we need to do is just use meanShift algorithm to every single frame, and the initial window of each frame is just the output window of the prior frame.
+  
+  
+  
+  
   
 
 \begin{thebibliography}{9}
