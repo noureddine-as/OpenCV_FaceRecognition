@@ -1,6 +1,6 @@
 \contentsline {chapter}{\numberline {1}Face detection techniques and algorithms}{2}{chapter.1}
 \contentsline {section}{\numberline {1.1}Introduction}{2}{section.1.1}
-\contentsline {section}{\numberline {1.2}Face detection and tracking algorithms}{2}{section.1.2}
+\contentsline {section}{\numberline {1.2}Face detection algorithms}{2}{section.1.2}
 \contentsline {subsection}{\numberline {1.2.1}Cascade classification based algorithm: Viola and Jones}{2}{subsection.1.2.1}
 \contentsline {subsubsection}{Characteristics of the algorithm}{3}{section*.2}
 \contentsline {subsubsection}{HAAR Features}{3}{section*.3}
@@ -21,12 +21,10 @@
 \contentsline {subsection}{\numberline {2.2.1}The Eigenfaces method}{8}{subsection.2.2.1}
 \contentsline {subsubsection}{Individual features}{8}{section*.13}
 \contentsline {subsubsection}{Disadvantages}{8}{section*.14}
-\contentsline {subsubsection}{The Eigenface approach}{9}{section*.15}
+\contentsline {subsubsection}{The Eigenface approach}{8}{section*.15}
 \contentsline {subsection}{\numberline {2.2.2}The Fisherfaces method}{9}{subsection.2.2.2}
 \contentsline {subsubsection}{conclusion}{9}{section*.16}
-\contentsline {subsection}{\numberline {2.2.3}SIFT Algorithm}{10}{subsection.2.2.3}
-\contentsline {subsubsection}{Overview}{10}{section*.17}
-\contentsline {subsubsection}{How does SIFT work?}{10}{section*.18}
-\contentsline {subsubsection}{An example of application}{11}{section*.19}
-\contentsline {subsection}{\numberline {2.2.4}}{11}{subsection.2.2.4}
+\contentsline {subsubsection}{The Eigenface approach}{9}{section*.17}
+\contentsline {subsection}{\numberline {2.2.3}Local Binary Patterns LBP}{10}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.4}SIFT Algorithm}{10}{subsection.2.2.4}
 \contentsfinish 

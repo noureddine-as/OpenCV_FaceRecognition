@@ -14,6 +14,10 @@ NB_TRAINING_IMGS = 10
 images_path = './images'
 
 
+def etiquette(name, mat, color, origin, xsize, ysize):
+    cv2.rectangle(mat, origin, (origin[0] + xsize, origin[1] + ysize), color, 2)
+    cv2.putText(mat, name, (origin[0], origin[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 1,  color, 1)
+
 def get_test_img_paths(path):
     test_img_paths = []
     for f in os.listdir(path):
@@ -38,8 +42,8 @@ def get_images_and_labels(path):
             training_images.append(image)  # [y: y + h, x: x + w])
             subject_id = int(os.path.split(image_path)[1].split("_")[0])
             labels.append(subject_id)
-            cv2.imshow("TRAINING - %s" % image_path, image)   #subject_id, image)
-            cv2.waitKey(10)
+            #cv2.imshow("TRAINING - %s" % image_path, image)   #subject_id, image)
+            #cv2.waitKey(10)
     else:
         for image_path in training_imgs_paths:
             image_pil = Image.open(image_path).convert('L')
@@ -50,9 +54,9 @@ def get_images_and_labels(path):
                 training_images.append(image[y: y + h, x: x + w])
                 subject_id = int(os.path.split(image_path)[1].split("_")[0])
                 labels.append(subject_id)
-                cv2.imshow("TRAINING - %s" % image_path, image[y: y + h, x: x + w])
-               # cv2.imshow("TRAINING - %d" % subject_id, image[y: y + h, x: x + w])
-                cv2.waitKey(10)
+                #cv2.imshow("TRAINING - %s" % image_path, image[y: y + h, x: x + w])
+                #cv2.imshow("TRAINING - %d" % subject_id, image[y: y + h, x: x + w])
+                #cv2.waitKey(10)
 
     return training_images, labels
 
@@ -105,12 +109,14 @@ def run_recognizer():
                 c = collections.Counter(results)
                 res = c.most_common(1)[0][0]
                 print "---------------->>>>>   {}   <<<<<<<----------------".format(last_names[res])   #, conf)
+                etiquette(name=last_names[res], mat=predict_image, color=(255,0,0), origin=(x, y), xsize=w, ysize=h)
                 count = 0
                 results = {}
 
             cv2.imshow("Recognizing Face", predict_image)
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        k = cv2.waitKey(1) & 0xFF
+        if k in (ord('q'), ord('s'), ord('l')):
             break
 
     cv2.destroyAllWindows()

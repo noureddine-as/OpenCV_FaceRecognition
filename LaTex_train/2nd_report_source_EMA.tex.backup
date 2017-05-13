@@ -43,7 +43,7 @@
     Object detection algorithms are used in face detection and face recognition. It is also used in tracking objects, for example tracking a ball during a football match, tracking movement of a cricket bat, tracking a person in a video.\par
     The concept is that every object class has its own special features that helps in classifying the class – for example all circles are round. Object class detection uses these special features. For example, when looking for circles, objects that are at a particular distance from a point (i.e. the center) are sought. Similarly, when looking for squares, objects that are perpendicular at corners and have equal side lengths are needed. A similar approach is used for face identification where eyes, nose, and lips can be found and features like skin color and distance between eyes can be found\cite{wiki_link}.\par
 
-\section{Face detection and tracking algorithms}
+\section{Face detection algorithms}
     Cascading is an ensemble learning based on the concatenation of several Classifiers, using all information collected from the output from a given classifier as additional information for the next classifier in the cascade. Cascading is a multistage system.\par
     Cascading classifiers are trained with several hundred ``\emph{positive}'' sample views of a particular object and arbitrary ``\emph{negative}'' images of the same size. \par
     After the classifier is trained it can be applied to a region of an image and detect the object in question. To search for the object in the entire frame, the search window can be moved across the image and check every location for the classifier. This process is most commonly used in image processing for object detection and tracking, primarily facial detection and recognition.\par
@@ -192,109 +192,75 @@ We calculate the weight of each color in the whole picture using histogram, and 
     \subsubsection{Track}
 
     The last step is tracking, if we have a video, or frames captured by our web camera, what we need to do is just use meanShift algorithm to every single frame, and the initial window of each frame is just the output window of the prior frame.
- 
-  
+    
     \section{Conclusion}
     As a conclusion, CAMshift and HAAR Cascade are two different methods used for detection ; the first one is used for tracking the specified object detected with the second method, so even if there is a permanent movement of the object that we want to detect ,with the collaboration of this two methods the detection will be succeeded.
-    
- 
     
 \chapter{Face recognition techniques and algorithms}  
 	\section{Introduction}
 	We have developed a near-real-time computer system that can locate and track a subject's head, and then recognize the person by comparing characteristics of the face to those of known individuals. The technology of face recognition has become mature within these few years. System, using the face recognition, has become true in real life. In this paper, we will have a comparative study of three most recently methods for face recognition. One of the approach is eigenface, fisherfaces and other one is the Local Binary Patterns Histograms (LBPH). After the implementation of the above three methods, we learn the advantages and Disadvantages of each approach and the difficulties for the implementation.
 	
-	
-	\section{Face recognition methods}
+	\section{Face recognation methods}
 		\subsection{The Eigenfaces method}
-		  Eigenfaces is the name given to a set of eigenvectors when they are used in the computer vision problem of human face recognition. The approach of using eigenfaces for recognition was developed by Sirovich and Kirby (1987) and used by Matthew Turk and Alex Pentland in face classification. The eigenvectors are derived from the covariance matrix of the probability distribution over the high-dimensional vector space of face images.
-		  
-			\subsubsection{Individual features}
+		Eigenfaces is the name given to a set of eigenvectors when they are used in the computer vision problem of human face recognition. The approach of using eigenfaces for recognition was developed by Sirovich and Kirby (1987) and used by Matthew Turk and Alex Pentland in face classification. The eigenvectors are derived from the covariance matrix of the probability distribution over the high-dimensional vector space of face images.
+		
+		\subsubsection{Individual features}
+		
+		\begin{itemize}
+			\item \textbf{eyes, nose, mouth, head outline}
+			\item \textbf{position and size relationships}
 			
+		\subsubsection{Disadvantages}
+		
+		\begin{itemize}
+			\item \textbf{multiple views} 
+			\item \textbf{fragile and complex}
+		\begin{figure}[h]
+			\centering
+			\caption{\label{face recognation} The Eigenfaces method\cite{haar_lbp_hog_comp_pdf}}
+			\includegraphics[scale=0.55]{capture0.png}
+		\end{figure}
+	
+	
+		\subsubsection{The Eigenface approach}
 			\begin{itemize}
-				\item \textbf{eyes, nose, mouth, head outline}
-				\item \textbf{position and size relationships}
-			\end{itemize}
-			
-			\subsubsection{Disadvantages}
-			
-			\begin{itemize}
-				\item \textbf{multiple views} 
-				\item \textbf{fragile and complex}
-			\end{itemize}
-			
+			\item \textbf{images are points in a vector space} 
+			\item \textbf{use PCA to reduce dimensionality}
+			\item \textbf{face space} 
+			\item \textbf{compare projections onto face space to recognize faces}
 			\begin{figure}[h]
 				\centering
-				\caption{\label{face recognation} The Eigenfaces method\cite{haar_lbp_hog_comp_pdf}}
-				\includegraphics[scale=0.55]{capture0.png}
+				\caption{\label{face recognation} The Eigenfaces approach \cite{haar_lbp_hog_comp_pdf}}
+				\includegraphics[scale=0.55]{capture1.png}
 			\end{figure}
+		
+		\subsection{The Fisherfaces method}
+		Fisherface Concept-Differing from the Eigenface concept, the fisherface method tries to maximize the ratio of the between-class scatter versus the within-class scatter . The result of this shapes the projections so that the distances between the classes are at a maximum, while the distances between samples of the same class are at a minimum. A possible disadvantage is if the between-class scatter is large, then the within-class scatter might also still be of a relatively large value.
+		
+			\subsubsection{conclusion}
+			Eigenfaces and Fisherfaces take a somewhat holistic approach to face recognition. You treat your data as a vector somewhere in a high-dimensional image space. We all know high-dimensionality is bad, so a lower-dimensional subspace is identified, where (probably) useful information is preserved. The Eigenfaces approach maximizes the total scatter, which can lead to problems if the variance is generated by an external source, because components with a maximum variance over all classes aren’t necessarily useful for classification. So to preserve some discriminative information we applied a Linear Discriminant Analysis and optimized as described in the Fisherfaces method. The Fisherfaces method worked great... at least for the constrained scenario we’ve assumed in our model.
+			Now real life isn’t perfect. You simply can’t guarantee perfect light settings in your images or 10 different images of a person. So what if there’s only one image for each person? Our covariance estimates for the subspace may be horribly wrong, so will the recognition. Remember the Eigenfaces method had a 96% recognition rate. How many images do we actually need to get such useful estimates? 
 			
+		\includegraphics{pic2}
 			\subsubsection{The Eigenface approach}
-				\begin{itemize}
-				\item \textbf{images are points in a vector space} 
-				\item \textbf{use PCA to reduce dimensionality}
-				\item \textbf{face space} 
-				\item \textbf{compare projections onto face space to recognize faces}
-				\end{itemize}
-				
-				\begin{figure}[h]
-					\centering
-					\caption{\label{face recognation} The Eigenfaces approach \cite{haar_lbp_hog_comp_pdf}}
-					\includegraphics[scale=0.55]{capture1.png}
-				\end{figure}
 			
-			\subsection{The Fisherfaces method}
-				Fisherface Concept-Differing from the Eigenface concept, the fisherface method tries to maximize the ratio of the between-class scatter versus the within-class scatter . The result of this shapes the projections so that the distances between the classes are at a maximum, while the distances between samples of the same class are at a minimum. A possible disadvantage is if the between-class scatter is large, then the within-class scatter might also still be of a relatively large value.
+			So in order to get good recognition rates you’ll need at least 8(+-1) images for each person and the Fisherfaces method doesn’t really help here. The above experiment is a 10-fold cross validated result carried.
+			So some research concentrated on extracting local features from images. The idea is to not look at the whole image as a high-dimensional vector, but describe only local features of an object. The features you extract this way will have a low-dimensionality implicitly. But you’ll soon observe the image representation we are given doesn’t only suffer from illumination variations. Think of things like scale, translation or rotation in images - your local description has to be at least a bit robust against those things. the Local Binary Patterns methodology has its roots in 2D texture analysis. The basic idea of Local Binary Patterns is to summarize the local structure in an image by comparing each pixel with its neighborhood. Take a pixel as center and threshold its neighbors against. If the intensity of the center pixel is greater-equal its neighbor, then denote it with 1 and 0 if not. You’ll end up with a binary number for each pixel, just like 11001111. So with 8 surrounding pixels you’ll end up with 2^8 possible combinations, called Local Binary Patterns or sometimes referred to as LBP codes. For example a LBP operator described in literature used a fixed 3 x 3 neighborhood just like this:
 			
-				\subsubsection{conclusion}
-				Eigenfaces and Fisherfaces take a somewhat holistic approach to face recognition. You treat your data as a vector somewhere in a high-dimensional image space. We all know high-dimensionality is bad, so a lower-dimensional subspace is identified, where (probably) useful information is preserved. The Eigenfaces approach maximizes the total scatter, which can lead to problems if the variance is generated by an external source, because components with a maximum variance over all classes aren’t necessarily useful for classification. So to preserve some discriminative information we applied a Linear Discriminant Analysis and optimized as described in the Fisherfaces method. The Fisherfaces method worked great... at least for the constrained scenario we’ve assumed in our model.
-				Now real life isn’t perfect. You simply can’t guarantee perfect light settings in your images or 10 different images of a person. So what if there’s only one image for each person? Our covariance estimates for the subspace may be horribly wrong, so will the recognition. Remember the Eigenfaces method had a 96% recognition rate. How many images do we actually need to get such useful estimates? 
-				
-				\begin{figure}[h]
-					\centering
-					\includegraphics{pic2.png}
-				\end{figure}
-			
-				\subsubsection{The Fisherface approach}
-				
-				So in order to get good recognition rates you’ll need at least 8(+-1) images for each person and the Fisherfaces method doesn’t really help here. The above experiment is a 10-fold cross validated result carried.
-				So some research concentrated on extracting local features from images. The idea is to not look at the whole image as a high-dimensional vector, but describe only local features of an object. The features you extract this way will have a low-dimensionality implicitly. But you’ll soon observe the image representation we are given doesn’t only suffer from illumination variations. Think of things like scale, translation or rotation in images - your local description has to be at least a bit robust against those things. the Local Binary Patterns methodology has its roots in 2D texture analysis. The basic idea of Local Binary Patterns is to summarize the local structure in an image by comparing each pixel with its neighborhood. Take a pixel as center and threshold its neighbors against. If the intensity of the center pixel is greater-equal its neighbor, then denote it with 1 and 0 if not. You’ll end up with a binary number for each pixel, just like 11001111. So with 8 surrounding pixels you’ll end up with 2^8 possible combinations, called Local Binary Patterns or sometimes referred to as LBP codes. For example a LBP operator described in literature used a fixed 3 x 3 neighborhood just like this:
-				      
-			      \begin{figure}[h]
-				      \centering
-				      \caption{\label{Face recognition} LBPH principe\cite{haar_lbp_hog_comp_pdf}}
-				      \includegraphics[scale=0.55]{pic2.png}
-			      \end{figure}
-			      
-			      
-			      
-		\subsection{SIFT Algorithm}
-			      
-			      \textbf{Scale-invariant feature transform (SIFT)} is an algorithm in computer vision to detect and describe local features in images. The algorithm was patented in the US by the University of British Columbia \cite{uspatent_sift} and published by David Lowe in 1999.\cite{Lowe_David}
-
-			      Applications include object recognition, robotic mapping and navigation, image stitching, 3D modeling, gesture recognition, video tracking, individual identification of wildlife and match moving. \\
-			      
-			      Due to time limitation, we will not dive deep into this method in this document, we will only present some key notes that distinguish it from the other methods.
-			      
-			      \subsubsection{Overview}
-			      
-			      SIFT is simply an algorithm that extracts the key points that distinguish a specific object. This description, extracted from a training image, can then be used to identify the object when attempting to locate the object in a test image containing many other objects.
-			      To perform reliable recognition, it is important that the features extracted from the training image be detectable even under changes in image scale, noise and illumination. Such points usually lie on high-contrast regions of the image, such as object edges.
-			      The relative positions between these key features in the original scene shouldn't change from one image to another.
-			  
-			      SIFT detects and uses a very large number of features from the images, which reduces the contribution of the errors caused by these local variations in the average error of all feature matching errors.
-			      This technique can robustly identify objects even among clutter and under partial occlusion, because the SIFT feature descriptor is invariant to uniform scaling, orientation, illumination changes, and partially invariant to affine distortion.\cite{uspatent_sift}
-			      
-			      \subsubsection{How does SIFT work?}
-			      SIFT keypoints of objects are first extracted from a set of reference images\cite{Lowe_David} and stored in a database.
-			      An object is recognized in a new image by individually comparing each feature from the new image to this database and finding candidate matching features based on Euclidean distance of their feature vectors.
-			      From the full set of matches, subsets of keypoints that agree on the object and its location, scale, and orientation in the new image are identified to filter out good matches.
-			      The determination of consistent clusters is performed rapidly by using an efficient hash table implementation of the generalized Hough transform. Each cluster of 3 or more features that agree on an object and its pose is then subject to further detailed model verification and subsequently outliers are discarded. Finally the probability that a particular set of features indicates the presence of an object is computed, given the accuracy of fit and number of probable false matches. Object matches that pass all these tests can be identified as correct with high confidence.\cite{Lowe_David_2}
-			      
-			      \subsubsection{An example of application}
-			      
-			      
-		\subsection{}
-			      
+		\begin{figure}[h]
+			\centering
+			\caption{\label{face recognation} LBPH principe\cite{haar_lbp_hog_comp_pdf}}
+			\includegraphics[scale=0.55]{pic2.png}
+		\end{figure}
+		
+		\subsection{Local Binary Patterns LBP}
+		
+		Local Binary Pattern used in face recognition was proposed by Ahonen . The method provide information about the shape and the texture. The original LBP operator labels the pixels of an image by thresholding the 3∗3-neighbourhood of each pixel with the center value and consider the results as a binary number, and we make a histogram to describe the image. Here we use the extension to original operator called uniform pattern. A LBP is called uniform if it contains at most two bitwise transitions from 0 to 1. With this criteria, the number of bins of different patterns reduced from 256 to 59, 58 bins for different uniform patterns, and one bin for nonuniform patterns. A image is divided by p ∗ p patches, each of them have a histogram of LBP. The histogram will be concatenated as a p ∗ p ∗ 59vector feature descriptor.
+		The parameters are the divided number p, and the inputimages pixel d. In the experiment, we find out if p is bigger, the result always be better. The image size 64 ∗ 64 is most suitable for all cases. In the end, we decide d = 64 ∗ 64 and p = 8 for testing. Moreover, LBP reaches a highest accuracy.
+		
+		
+	
+	
 
 \begin{thebibliography}{9}
   \bibitem{wiki_link} 
@@ -326,17 +292,7 @@ runway detection in high resolution imagery''} \\
     \textit{``Continuously Adaptive Shift''} \\
     \url{http://eric-yuan.me/continuously-adaptive-shift/}
     
-    \bibitem{uspatent_sift}
-    \textit{U.S. Patent 6,711,293, "Method and apparatus for identifying scale invariant features in an image and use of same for locating an object in an image", David Lowe's patent for the SIFT algorithm, March 23, 2004}  \\
-    \url{https://www.google.com/patents/US6711293}
-    
-    \bibitem{Lowe_David}
-    \textit{ Lowe, David G. (1999). "Object recognition from local scale-invariant features" (PDF). Proceedings of the International Conference on Computer Vision. 2. pp. 1150–1157. doi:10.1109/ICCV.1999.790410.} \\
-    \url{http://www.cs.ubc.ca/~lowe/papers/iccv99.pdf}
-    
-    \bibitem{Lowe_David_2}
-    \textit{Lowe, David G. (2004). "Distinctive Image Features from Scale-Invariant Keypoints". International Journal of Computer Vision. 60 (2): 91–110. doi:10.1023/B:VISI.0000029664.99615.94.}
-    \url{http://citeseer.ist.psu.edu/lowe04distinctive.html}
+
 
 \end{thebibliography}
 
