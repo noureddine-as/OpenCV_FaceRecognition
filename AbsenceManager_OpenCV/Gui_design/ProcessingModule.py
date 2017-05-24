@@ -1,13 +1,15 @@
 import cv2, os
 import numpy as np
 from PIL import Image
-from xml_parser import *
+from XmlManager import *
+from ExcelManager import *
 import collections
-
+import time
 
 cascadePath = "haarcascade_frontalface_default.xml"
 faceCascade, recognizer = None, None
 last_names = None
+xml_mgr = XmlManager()
 
 CROPPING_ENABLED = True
 NB_TRAINING_IMGS = 10
@@ -42,12 +44,14 @@ def get_images_and_labels(path):
             training_images.append(image)  # [y: y + h, x: x + w])
             subject_id = int(os.path.split(image_path)[1].split("_")[0])
             labels.append(subject_id)
+        print labels
             #cv2.imshow("TRAINING - %s" % image_path, image)   #subject_id, image)
             #cv2.waitKey(10)
     else:
         for image_path in training_imgs_paths:
-            image_pil = Image.open(image_path).convert('L')
-            image = np.array(image_pil, 'uint8')
+            #image_pil = Image.open(image_path).convert('L')
+            #image = np.array(image_pil, 'uint8')
+            image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
             faces = faceCascade.detectMultiScale(image)
             # If face is detected, append the face to images and the label to labels
             for (x, y, w, h) in faces:
@@ -55,8 +59,8 @@ def get_images_and_labels(path):
                 subject_id = int(os.path.split(image_path)[1].split("_")[0])
                 labels.append(subject_id)
                 #cv2.imshow("TRAINING - %s" % image_path, image[y: y + h, x: x + w])
-                #cv2.imshow("TRAINING - %d" % subject_id, image[y: y + h, x: x + w])
-                #cv2.waitKey(10)
+                cv2.imshow("TRAINING - %d" % subject_id, image[y: y + h, x: x + w])
+                cv2.waitKey(2)
 
     return training_images, labels
 
@@ -76,14 +80,17 @@ def train_recognizer():
     recognizer.train(images, np.array(labels))
 
 
-def run_recognizer():
+def run_recognizer(course, branch, date, d1, d2):
     global recognizer, last_names
 
-    last_names = get_LastNames()
+    last_names = xml_mgr.get_LastNames()
+    first_names = xml_mgr.get_FirstNames()
+
     cap = cv2.VideoCapture(0)
 
     count = 0
     results = {}
+    presents_list = set()
     while 1:
         _, predict_image = cap.read()
 
@@ -105,19 +112,26 @@ def run_recognizer():
             results[nbr_predicted] = results.get(nbr_predicted, 0) + 1
             count += 1
             print "{} is Recognized with confidence {}".format(last_names[nbr_predicted], conf)
-            print results
             if count == 11 :
                 c = collections.Counter(results)
                 res = c.most_common(1)[0][0]
                 print "---------------->>>>>   {}   <<<<<<<----------------".format(last_names[res])   #, conf)
                 etiquette(name=last_names[res], mat=predict_image, color=(255,0,0), origin=(x, y), xsize=w, ysize=h)
+                presents_list.add(res)
                 count = 0
                 results = {}
 
             cv2.imshow("Recognizing Face", predict_image)
 
         k = cv2.waitKey(1) & 0xFF
-        if k in (ord('q'), ord('s'), ord('l')):
+        if k == ord('q'):
+            excel_presents_list = []
+
+            for j in range(len(presents_list)):
+                _id = presents_list.pop()
+                excel_presents_list.append([_id, last_names[_id], first_names[_id]])
+            #list, course, branch, date, d1, d2
+            writeExcel(excel_presents_list, course, branch, date, d1, d2, str(time.asctime()))
             break
 
     cv2.destroyAllWindows()
