@@ -199,23 +199,30 @@ We calculate the weight of each color in the whole picture using histogram, and 
     
  
     
-\chapter{Face recognition techniques and algorithms}  
+\chapter{Face recognition methods}  
 	\section{Introduction}
-	We have developed a near-real-time computer system that can locate and track a subject's head, and then recognize the person by comparing characteristics of the face to those of known individuals. The technology of face recognition has become mature within these few years. System, using the face recognition, has become true in real life. In this paper, we will have a comparative study of three most recently methods for face recognition. One of the approach is eigenface, fisherfaces and other one is the Local Binary Patterns Histograms (LBPH). After the implementation of the above three methods, we learn the advantages and Disadvantages of each approach and the difficulties for the implementation.
+	We have developed a near-real-time computer system that can locate and track a subject's head, and then recognize the person by comparing characteristics of the face to those of known individuals. The technology of face recognition has become mature within these few years. Systems using the face recognition, have become true in real life. In this report, we will see a comparative study of the most recent methods of face recognition. One of the approaches is using the eigenfaces method, fisherfaces method, LBPH and SIFT methods. After the implementation of the above methods, we learned the advantages and disadvantages of each approach and the difficulties of their implementation.
 	
-	
-	\section{Face recognition methods}
-		\subsection{The Eigenfaces method}
-		  Eigenfaces is the name given to a set of eigenvectors when they are used in the computer vision problem of human face recognition. The approach of using eigenfaces for recognition was developed by Sirovich and Kirby (1987) and used by Matthew Turk and Alex Pentland in face classification. The eigenvectors are derived from the covariance matrix of the probability distribution over the high-dimensional vector space of face images.
+	\section{The Eigenfaces method}
+		Eigenfaces are the name given to a set of eigenvectors when they are used in a computer vision problem of human face recognition. The approach of using eigenfaces for recognition was developed by Sirovich and Kirby (1987) and used by Matthew Turk and Alex Pentland in face classification. The eigenvectors are derived from the covariance matrix of the probability distribution over the high-dimensional vector space of face images.
 		  
-			\subsubsection{Individual features}
+		\subsection{Individual features}
 			
 			\begin{itemize}
-				\item \textbf{eyes, nose, mouth, head outline}
-				\item \textbf{position and size relationships}
+				\item \textbf{Eyes, nose, mouth, head outline}
+				\item \textbf{Position and size relationships}
 			\end{itemize}
 			
-			\subsubsection{Disadvantages}
+		\subsection{Advantages}
+			As an appearance-based approach, eigenface recognition method has several advantages:
+			\begin{itemize}
+				\item {Raw intensity data are used directly for learning and recognition without any significant low-level or mid-level processing.}
+				\item {No knowledge of geometry and reflectance of faces is required.}
+				\item {Data compression is achieved by the low-dimensional subspace representation.}
+				\item {Recognition is simple and efficient compared to other matching approaches.}
+			\end{itemize}
+			
+		\subsection{Disadvantages}
 			
 			\begin{itemize}
 				\item \textbf{multiple views} 
@@ -228,7 +235,7 @@ We calculate the weight of each color in the whole picture using histogram, and 
 				\includegraphics[scale=0.55]{capture0.png}
 			\end{figure}
 			
-			\subsubsection{The Eigenface approach}
+		\subsection{The Eigenface approach}
 				\begin{itemize}
 				\item \textbf{images are points in a vector space} 
 				\item \textbf{use PCA to reduce dimensionality}
@@ -242,7 +249,7 @@ We calculate the weight of each color in the whole picture using histogram, and 
 					\includegraphics[scale=0.55]{capture1.png}
 				\end{figure}
 			
-			\subsection{The Fisherfaces method}
+	\section{The Fisherfaces method}
 				Fisherface Concept-Differing from the Eigenface concept, the fisherface method tries to maximize the ratio of the between-class scatter versus the within-class scatter . The result of this shapes the projections so that the distances between the classes are at a maximum, while the distances between samples of the same class are at a minimum. A possible disadvantage is if the between-class scatter is large, then the within-class scatter might also still be of a relatively large value.
 			
 				\subsubsection{conclusion}
@@ -254,16 +261,19 @@ We calculate the weight of each color in the whole picture using histogram, and 
 					\includegraphics{pic2.png}
 				\end{figure}
 			
-				\subsubsection{The Eigenface approach}
+				\subsubsection{The Fisherface approach}
 				
 				So in order to get good recognition rates you’ll need at least 8(+-1) images for each person and the Fisherfaces method doesn’t really help here. The above experiment is a 10-fold cross validated result carried.
 				So some research concentrated on extracting local features from images. The idea is to not look at the whole image as a high-dimensional vector, but describe only local features of an object. The features you extract this way will have a low-dimensionality implicitly. But you’ll soon observe the image representation we are given doesn’t only suffer from illumination variations. Think of things like scale, translation or rotation in images - your local description has to be at least a bit robust against those things. the Local Binary Patterns methodology has its roots in 2D texture analysis. The basic idea of Local Binary Patterns is to summarize the local structure in an image by comparing each pixel with its neighborhood. Take a pixel as center and threshold its neighbors against. If the intensity of the center pixel is greater-equal its neighbor, then denote it with 1 and 0 if not. You’ll end up with a binary number for each pixel, just like 11001111. So with 8 surrounding pixels you’ll end up with 2^8 possible combinations, called Local Binary Patterns or sometimes referred to as LBP codes. For example a LBP operator described in literature used a fixed 3 x 3 neighborhood just like this:
-				
-			\begin{figure}[h]
-				\centering
-				\caption{\label{face recognation} LBPH principe\cite{haar_lbp_hog_comp_pdf}}
-				\includegraphics[scale=0.55]{pic2.png}
-			\end{figure}
+				      
+			      \begin{figure}[h]
+				      \centering
+				      \caption{\label{Face recognition} LBPH principe\cite{haar_lbp_hog_comp_pdf}}
+				      \includegraphics[scale=0.55]{pic2.png}
+			      \end{figure}
+			      
+			      
+			      
 		\subsection{SIFT Algorithm}
 			      
 			      \textbf{Scale-invariant feature transform (SIFT)} is an algorithm in computer vision to detect and describe local features in images. The algorithm was patented in the US by the University of British Columbia \cite{uspatent_sift} and published by David Lowe in 1999.\cite{Lowe_David}

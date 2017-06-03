@@ -17,4 +17,12 @@
 		<email>abcdabcd@gmail.com</email>
 	</student>
 
+	<student id="3">
+		<first_name>Youssef</first_name>
+		<last_name>Harmouch</last_name>
+		<branch>CSEE - T2</branch>
+		<level>INE2</level>
+		<email>abcdabcd@gmail.com</email>
+	</student>
+
 </students>

@@ -58,7 +58,7 @@ class NewSession_Form(QtGui.QMainWindow):
 
         self.ui.TXT_Course.setText("Embedded Systems Design")
         self.ui.TXT_Date.setText(time.asctime())
-        self.ui.TXT_Branch.setText("Amazing CSEE")
+        self.ui.TXT_Branch.setText("CSEE")
 
     def BeginSession(self):
         # course, branch, date, d1, d2

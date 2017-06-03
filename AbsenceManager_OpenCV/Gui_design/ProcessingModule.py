@@ -111,8 +111,9 @@ def run_recognizer(course, branch, date, d1, d2):
 
             results[nbr_predicted] = results.get(nbr_predicted, 0) + 1
             count += 1
-            print "{} is Recognized with confidence {}".format(last_names[nbr_predicted], conf)
-            if count == 11 :
+            #print "{} is Recognized with confidence {}".format(last_names[nbr_predicted]), conf)
+            print "{} is Recognized".format(last_names[nbr_predicted]) #, conf)
+	    if count == 11 :
                 c = collections.Counter(results)
                 res = c.most_common(1)[0][0]
                 print "---------------->>>>>   {}   <<<<<<<----------------".format(last_names[res])   #, conf)

@@ -56,8 +56,4 @@ class ImageDbManager():
 
             if k == ord('q') and (self.cpt >= self.NB_TRAINING_IMGS) :
                 break
-        cv2.destroyWindow(self.WIN_TITLE)
-
-#if __name__ == "__main__":
-#    mgr = ImageDbManager(id=44 , lastName="Hello")
-#    mgr.run()
+        cv2.destroyAllWindows()

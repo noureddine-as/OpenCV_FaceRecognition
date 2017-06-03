@@ -199,50 +199,61 @@ We calculate the weight of each color in the whole picture using histogram, and 
     
  
     
-\chapter{Face recognition techniques and algorithms}  
+\chapter{Face recognition methods}  
 	\section{Introduction}
-	We have developed a near-real-time computer system that can locate and track a subject's head, and then recognize the person by comparing characteristics of the face to those of known individuals. The technology of face recognition has become mature within these few years. System, using the face recognition, has become true in real life. In this paper, we will have a comparative study of three most recently methods for face recognition. One of the approach is eigenface, fisherfaces and other one is the Local Binary Patterns Histograms (LBPH). After the implementation of the above three methods, we learn the advantages and Disadvantages of each approach and the difficulties for the implementation.
+	We have developed a near-real-time computer system that can locate and track a subject's head, and then recognize the person by comparing characteristics of the face to those of known individuals. The technology of face recognition has become mature within these few years. Systems using the face recognition, have become true in real life. In this report, we will see a comparative study of the most recent methods of face recognition. One of the approaches is using the eigenfaces method, fisherfaces method, LBPH and SIFT methods. After the implementation of the above methods, we learned the advantages and disadvantages of each approach and the difficulties of their implementation.
 	
-	
-	\section{Face recognition methods}
-		\subsection{The Eigenfaces method}
-		  Eigenfaces is the name given to a set of eigenvectors when they are used in the computer vision problem of human face recognition. The approach of using eigenfaces for recognition was developed by Sirovich and Kirby (1987) and used by Matthew Turk and Alex Pentland in face classification. The eigenvectors are derived from the covariance matrix of the probability distribution over the high-dimensional vector space of face images.
+	\section{The Eigenfaces method}
+		Eigenfaces are the name given to a set of eigenvectors when they are used in a computer vision problem of human face recognition. The approach of using eigenfaces for recognition was developed by Sirovich and Kirby (1987) and used by Matthew Turk and Alex Pentland in face classification. The eigenvectors are derived from the covariance matrix of the probability distribution over the high-dimensional vector space of face images.
 		  
-			\subsubsection{Individual features}
+		\subsection{Individual features}
 			
 			\begin{itemize}
-				\item \textbf{eyes, nose, mouth, head outline}
-				\item \textbf{position and size relationships}
-			\end{itemize}
-			
-			\subsubsection{Disadvantages}
-			
-			\begin{itemize}
-				\item \textbf{multiple views} 
-				\item \textbf{fragile and complex}
+				\item {Eyes, nose, mouth, head outline}
+				\item {Position and size relationships}
 			\end{itemize}
 			
 			\begin{figure}[h]
 				\centering
-				\caption{\label{face recognation} The Eigenfaces method\cite{haar_lbp_hog_comp_pdf}}
+				\caption{\label{face recognation} The Eigenfaces method principal features\cite{haar_lbp_hog_comp_pdf}}
 				\includegraphics[scale=0.55]{capture0.png}
 			\end{figure}
 			
-			\subsubsection{The Eigenface approach}
-				\begin{itemize}
-				\item \textbf{images are points in a vector space} 
-				\item \textbf{use PCA to reduce dimensionality}
-				\item \textbf{face space} 
-				\item \textbf{compare projections onto face space to recognize faces}
-				\end{itemize}
-				
-				\begin{figure}[h]
+		\subsection{Advantages}
+			As an appearance-based approach, eigenface recognition method has several advantages:
+			\begin{itemize}
+				\item {Raw intensity data are used directly for learning and recognition without any significant low-level or mid-level processing.}
+				\item {No knowledge of geometry and reflectance of faces is required.}
+				\item {Data compression is achieved by the low-dimensional subspace representation.}
+				\item {Recognition is simple and efficient compared to other matching approaches.}
+			\end{itemize}
+			
+		\subsection{Disadvantages}
+			These advantages reflect the power of appearance-based approach in ease of implementation. However, the experimental results also demonstrate some serious limitations of eigenface representation method for face recognition under different conditions.
+			\begin{itemize}
+			      \item{very sensitive to scale.}
+			      \item{Recognition rate decreases for recognition under varying pose and illumination.}
+			      \item{Fragile and complex}
+			\end{itemize}
+			
+			Though the eigenfaces approach is shown to be robust when dealing with expression and glasses, these experiments were made only with frontal views. The problem can be far more difficult when there exists extreme change in pose as well as in expression and disguise. Additionally, all the face images tested in the experiments are taken with a uniform background. However, this condition may not be satisfied in most natural scenes, which will seriously deteriorate the recognition performance. In such cases, a segmentation process has to be considered. 
+			
+		\subsection{The Eigenface approach}
+		\begin{figure}[h]
 					\centering
 					\caption{\label{face recognation} The Eigenfaces approach \cite{haar_lbp_hog_comp_pdf}}
 					\includegraphics[scale=0.55]{capture1.png}
 				\end{figure}
+				
+				\begin{itemize}
+				      \item {Images are points in a vector space.} 
+				      \item {We use PCA to reduce dimensionality of the face space.} 
+				      \item {Compare projections onto face space to recognize faces.}
+				\end{itemize}
+				
+				
 			
-			\subsection{The Fisherfaces method}
+	\section{The Fisherfaces method}
 				Fisherface Concept-Differing from the Eigenface concept, the fisherface method tries to maximize the ratio of the between-class scatter versus the within-class scatter . The result of this shapes the projections so that the distances between the classes are at a maximum, while the distances between samples of the same class are at a minimum. A possible disadvantage is if the between-class scatter is large, then the within-class scatter might also still be of a relatively large value.
 			
 				\subsubsection{conclusion}
