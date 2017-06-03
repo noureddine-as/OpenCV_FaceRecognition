@@ -3,18 +3,18 @@
 
 	<student id="1">
 		<first_name>Noureddine</first_name>
-		<last_name>AIT SAID</last_name>
+		<last_name>Ait Said</last_name>
 		<branch>CSEE - T1</branch>
-		<level>INE1</level>
-		<email>abcdabcd@gmail.com</email>
+		<level>INE2</level>
+		<email>noureddine.asni@gmail.com</email>
 	</student>
 
 	<student id="2">
 		<first_name>Mohamed Amine</first_name>
-		<last_name>ENNOUALI</last_name>
+		<last_name>Ennouali</last_name>
 		<branch>CSEE - T2</branch>
 		<level>INE2</level>
-		<email>abcdabcd@gmail.com</email>
+		<email>medaminennouali@email.com</email>
 	</student>
 
 	<student id="3">
@@ -22,7 +22,7 @@
 		<last_name>Harmouch</last_name>
 		<branch>CSEE - T2</branch>
 		<level>INE2</level>
-		<email>abcdabcd@gmail.com</email>
+		<email>ysf_harmouch@gmail.com</email>
 	</student>
 
 </students>
